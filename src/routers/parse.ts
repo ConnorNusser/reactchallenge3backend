@@ -1,24 +1,17 @@
 import express from 'express';
 const router = express.Router();
-const fileReader = async () => {
+const fileReader =() => {
     const fs = require('fs');
+    const filePath = './file.jsonl';
+    const data =  fs.readFileSync(filePath, 'utf8');
+    const dataVal = JSON.stringify(data);
+    const dataValParse = JSON.parse(dataVal);
 
-    const data =  await fs.readFile('/Users/connor/Desktop/reactchallenge3backend/file.jsonl', 'utf8', (error, data) => {
-        if(error){
-           console.log(error);
-           return;
-        }
-        const dataVal = JSON.stringify(data);
-        const dataValParse = JSON.parse(dataVal);
-        return dataValParse;
-   
-   })
-   console.log(data);
-   console.log("yo");
-    return data;
+    console.log(dataValParse);
+    return dataValParse;
 }
 router.get('/', async (req: any, res:any) =>{
-    const data = await fileReader();
+    const data = fileReader();
     return res.status(200).send(data);
   });
 
